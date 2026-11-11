@@ -3,6 +3,7 @@
    ========================================================= */
 
 :root {
+  color-scheme: only light;
   /* Brand */
   --navy-950: #050a18;
   --navy-900: #0a1228;
@@ -312,7 +313,7 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .ov-link { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 5; opacity: .55; }
 .ov-packet { fill: var(--accent); }
 .ov-node { fill: var(--white); stroke: var(--accent); stroke-width: 1.5; filter: drop-shadow(0 8px 14px rgba(11,18,38,.12)); }
-.orbit-viz text { font-family: var(--font-sans); font-size: 13px; font-weight: 700; fill: var(--ink); letter-spacing: .02em; }
+.orbit-viz text { font-family: var(--font-sans); font-size: 13px; font-weight: 800; fill: var(--label, var(--ink)); letter-spacing: .02em; }
 .ov-pulse { fill: none; stroke: var(--orange); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: ov-pulse 3.2s ease-out infinite; }
 @keyframes ov-rot { to { transform: rotate(360deg); } }
 @keyframes ov-dash { to { stroke-dashoffset: -180; } }

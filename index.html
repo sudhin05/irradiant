@@ -7,6 +7,7 @@
   <meta name="description" content="Irradiant is an India-based technology consulting partnership bridging strategy and on-ground deployment across water, energy and telecom infrastructure.">
   <link rel="canonical" href="https://irradiant.in/">
   <meta name="theme-color" content="#050a18">
+  <meta name="color-scheme" content="only light">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Irradiant Systems and Technologies">
   <meta property="og:description" content="Grounded technical consulting for complex infrastructure: water, energy and telecom.">
@@ -139,36 +140,38 @@
                   <circle cx="140" cy="266" r="2.5" fill="#f7931e"/>
                 </g>
 
-                <g class="ov-orbit" style="--accent:#2cc6ee">
+                <!-- Each vertical's 0/120/240deg position is baked into the markup, so the layout is
+                     correct even when animations are off (e.g. Android "Remove animations"). -->
+                <g transform="rotate(0 220 220)"><g class="ov-orbit" style="--accent:#2cc6ee;--label:#0b8fb3">
                   <line class="ov-link" x1="220" y1="166" x2="220" y2="104"/>
                   <circle class="ov-packet" r="3.5"><animateMotion dur="2.4s" repeatCount="indefinite" path="M220,166 L220,104"/></circle>
-                  <g transform="translate(220 70)"><g class="ov-upright">
+                  <g transform="translate(220 70) rotate(0)"><g class="ov-upright">
                     <circle r="58" fill="none"/>
                     <circle class="ov-node" r="31"/>
                     <use href="#i-water" x="-13" y="-13" width="26" height="26"/>
                     <text y="52" text-anchor="middle">Water</text>
                   </g></g>
-                </g>
-                <g class="ov-orbit" style="--accent:#f7a21b;animation-delay:-16s">
+                </g></g>
+                <g transform="rotate(120 220 220)"><g class="ov-orbit" style="--accent:#f7a21b;--label:#c97a00">
                   <line class="ov-link" x1="220" y1="166" x2="220" y2="104"/>
                   <circle class="ov-packet" r="3.5"><animateMotion dur="2.4s" begin="-.8s" repeatCount="indefinite" path="M220,166 L220,104"/></circle>
-                  <g transform="translate(220 70)"><g class="ov-upright" style="animation-delay:-16s">
+                  <g transform="translate(220 70) rotate(-120)"><g class="ov-upright">
                     <circle r="58" fill="none"/>
                     <circle class="ov-node" r="31"/>
                     <use href="#i-energy" x="-13" y="-13" width="26" height="26"/>
                     <text y="52" text-anchor="middle">Energy</text>
                   </g></g>
-                </g>
-                <g class="ov-orbit" style="--accent:#8f72ff;animation-delay:-32s">
+                </g></g>
+                <g transform="rotate(240 220 220)"><g class="ov-orbit" style="--accent:#8f72ff;--label:#6c4ee6">
                   <line class="ov-link" x1="220" y1="166" x2="220" y2="104"/>
                   <circle class="ov-packet" r="3.5"><animateMotion dur="2.4s" begin="-1.6s" repeatCount="indefinite" path="M220,166 L220,104"/></circle>
-                  <g transform="translate(220 70)"><g class="ov-upright" style="animation-delay:-32s">
+                  <g transform="translate(220 70) rotate(-240)"><g class="ov-upright">
                     <circle r="58" fill="none"/>
                     <circle class="ov-node" r="31"/>
                     <use href="#i-telecom" x="-13" y="-13" width="26" height="26"/>
                     <text y="52" text-anchor="middle">Telecom</text>
                   </g></g>
-                </g>
+                </g></g>
 
                 <circle class="ov-pulse" cx="220" cy="220" r="52"/>
                 <circle cx="220" cy="220" r="52" fill="#0a1228"/>
