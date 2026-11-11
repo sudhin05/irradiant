@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="l" gradientUnits="userSpaceOnUse" x1="50" y1="58" x2="36" y2="93"><stop offset="0" stop-color="#d9580b"/><stop offset=".45" stop-color="#f68a17"/><stop offset="1" stop-color="#ffb02e"/></linearGradient>
+    <linearGradient id="r" gradientUnits="userSpaceOnUse" x1="50" y1="58" x2="64" y2="93"><stop offset="0" stop-color="#e66a0e"/><stop offset=".5" stop-color="#f58714"/><stop offset="1" stop-color="#f7a01f"/></linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="#081a34"/>
+  <g transform="translate(50 50) scale(1.08) translate(-50 -50)">
+    <g id="c"><polygon fill="url(#l)" points="50,62.2 50,66.5 35.02,89.56 25.48,89.56 42.73,63"/><polygon fill="url(#r)" points="50,62.2 50,66.5 64.98,89.56 74.52,89.56 57.27,63"/></g>
+    <use xlink:href="#c" transform="rotate(72 50 50)"/><use xlink:href="#c" transform="rotate(144 50 50)"/>
+    <use xlink:href="#c" transform="rotate(216 50 50)"/><use xlink:href="#c" transform="rotate(288 50 50)"/>
+  </g>
+</svg>
