@@ -149,16 +149,20 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--header-h);
   display: flex; align-items: center;
-  transition: background-color .4s, backdrop-filter .4s, border-color .4s, height .4s var(--ease);
-  border-bottom: 1px solid transparent;
+  transition: height .4s var(--ease);
 }
-.site-header.is-scrolled {
-  --header-h: 70px;
+/* The frosted background lives on a pseudo-element: a backdrop-filter on the header itself
+   would become the containing block for the fixed mobile menu and trap it inside the bar. */
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: rgba(6, 11, 26, .78);
   -webkit-backdrop-filter: saturate(160%) blur(16px);
   backdrop-filter: saturate(160%) blur(16px);
-  border-color: var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  opacity: 0; transition: opacity .4s;
 }
+.site-header.is-scrolled { --header-h: 70px; }
+.site-header.is-scrolled::before { opacity: 1; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .nav-links { display: flex; align-items: center; gap: 6px; }
 .nav-links a {
@@ -200,6 +204,8 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
   .nav-links a[aria-current="page"]::after { display: none; }
   .nav-mobile-cta { display: inline-flex; margin-top: 28px; font-size: 1rem !important; letter-spacing: 0 !important; padding: 15px 26px !important; color: var(--navy-950) !important; background: var(--orange) !important; }
   .nav-open .nav-links { opacity: 1; visibility: visible; }
+  .nav-open .site-header::before { opacity: 0; transition: none; }
+  .hero-pillars { padding-bottom: 12px; }
   .nav-open { overflow: hidden; }
   .brand { position: relative; z-index: 2; }
 }
@@ -679,7 +685,7 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 /* ---------- Reveal animations ---------- */
 .js .reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
 .js .reveal.is-in { opacity: 1; transform: none; }
-.js .hero .reveal { transform: translateY(24px); }
+.js .hero .reveal:not(.is-in) { transform: translateY(24px); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
