@@ -166,6 +166,103 @@
     }
   }
 
+  /* ---------- Hero video reel ---------- */
+  var reel = document.querySelector("[data-hero-reel]");
+  if (reel) {
+    var vids = Array.prototype.slice.call(reel.querySelectorAll(".hero-video"));
+    var slides = Array.prototype.slice.call(reel.querySelectorAll("[data-reel-slide]"));
+    var toggleBtn = reel.querySelector("[data-reel-toggle]");
+    var conn = navigator.connection || {};
+    var lite = reduceMotion || conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
+    var small = window.matchMedia("(max-width: 760px)").matches;
+    var FALLBACK_MS = 7000; // per-slide time when video can't play (posters only)
+    var current = 0, paused = false, heroVisible = true, fallbackTimer = null, raf = null, slideStart = 0;
+
+    var srcFor = function (v) { return v.getAttribute(small ? "data-src-sm" : "data-src"); };
+    var load = function (v) {
+      if (!v.getAttribute("src")) { v.src = srcFor(v); v.preload = "auto"; v.load(); }
+    };
+    var setProgress = function (p) {
+      slides.forEach(function (s, i) { s.style.setProperty("--p", i === current ? p : 0); });
+    };
+    var show = function (i) {
+      current = (i + vids.length) % vids.length;
+      vids.forEach(function (v, k) {
+        v.classList.toggle("is-active", k === current);
+        if (k !== current && !lite) { try { v.pause(); } catch (e) {} }
+      });
+      slides.forEach(function (s, k) { s.classList.toggle("is-active", k === current); });
+      setProgress(0);
+      slideStart = performance.now();
+      if (lite) return;
+      var v = vids[current];
+      load(v);
+      load(vids[(current + 1) % vids.length]); // warm up the next clip
+      try { v.currentTime = 0; } catch (e) {}
+      play();
+    };
+    var play = function () {
+      if (lite || paused || !heroVisible) return;
+      var v = vids[current];
+      var pr = v.play();
+      if (pr && pr.catch) pr.catch(function () { startFallback(); }); // autoplay blocked (e.g. iOS low-power mode)
+    };
+    var startFallback = function () {
+      if (lite) return;
+      lite = true; // cycle posters instead of video
+      vids.forEach(function (v) { try { v.pause(); } catch (e) {} });
+      slideStart = performance.now();
+    };
+    var tick = function () {
+      if (!paused && heroVisible) {
+        if (lite) {
+          var p = Math.min(1, (performance.now() - slideStart) / FALLBACK_MS);
+          setProgress(p);
+          if (p >= 1 && !reduceMotion) show(current + 1);
+        } else {
+          var v = vids[current];
+          if (v.duration) setProgress(Math.min(1, v.currentTime / v.duration));
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    vids.forEach(function (v, k) {
+      v.muted = true; // required for autoplay
+      v.addEventListener("ended", function () { if (k === current) show(current + 1); });
+    });
+    // Hover/focus a pillar to jump to its clip (clicking still opens the service)
+    slides.forEach(function (s, k) {
+      s.addEventListener("mouseenter", function () { if (k !== current) show(k); });
+      s.addEventListener("focus", function () { if (k !== current) show(k); });
+    });
+
+    if (toggleBtn) {
+      if (reduceMotion) toggleBtn.hidden = true;
+      toggleBtn.addEventListener("click", function () {
+        paused = !paused;
+        toggleBtn.setAttribute("aria-pressed", String(paused));
+        toggleBtn.setAttribute("aria-label", paused ? "Play background video" : "Pause background video");
+        if (paused) { try { vids[current].pause(); } catch (e) {} }
+        else { slideStart = performance.now() - 0; play(); }
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+        if (heroVisible) play();
+        else if (!lite) { try { vids[current].pause(); } catch (e) {} }
+      }, { threshold: 0.05 }).observe(reel);
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { try { vids[current].pause(); } catch (e) {} } else play();
+    });
+
+    show(0);
+    if (!reduceMotion) raf = requestAnimationFrame(tick);
+  }
+
   /* ---------- Photo stacks ---------- */
   document.querySelectorAll("[data-stack]").forEach(function (stack) {
     var items = Array.prototype.slice.call(stack.querySelectorAll(".stack-item"));

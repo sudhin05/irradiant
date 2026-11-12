@@ -76,10 +76,24 @@
 
   <main id="main">
     <!-- ============ HERO ============ -->
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero hero--video" aria-labelledby="hero-title" data-hero-reel>
+      <!-- Background reel: one clip per vertical, crossfaded in sync with the pillars below.
+           Sources are attached by JS (small files on phones; posters only for reduced motion / data saver). -->
+      <div class="hero-media" aria-hidden="true">
+        <video class="hero-video hero-video--right is-active" muted playsinline preload="none" poster="assets/video/hero-water.jpg"
+               data-src="assets/video/hero-water.mp4" data-src-sm="assets/video/hero-water-sm.mp4"></video>
+        <video class="hero-video" muted playsinline preload="none" poster="assets/video/hero-energy.jpg"
+               data-src="assets/video/hero-energy.mp4" data-src-sm="assets/video/hero-energy-sm.mp4"></video>
+        <video class="hero-video" muted playsinline preload="none" poster="assets/video/hero-telecom.jpg"
+               data-src="assets/video/hero-telecom.mp4" data-src-sm="assets/video/hero-telecom-sm.mp4"></video>
+      </div>
+      <div class="hero-shade"></div>
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
-      <div class="hero-glow"></div>
       <div class="grid-lines"></div>
+      <button class="hero-pause" type="button" aria-pressed="false" aria-label="Pause background video" data-reel-toggle>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5L8 5.5Z" fill="currentColor"/></svg>
+      </button>
 
       <div class="container hero-inner">
         <span class="eyebrow reveal">Applied Infrastructure &amp; Engineering</span>
@@ -93,17 +107,20 @@
 
       <div class="container">
         <div class="hero-pillars reveal" style="--d:.34s">
-          <a class="hero-pillar" href="services.html#water">
+          <a class="hero-pillar is-active" href="services.html#water" data-reel-slide="0">
+            <span class="hero-pillar-bar" aria-hidden="true"></span>
             <span class="tag"><i></i>Water</span>
             <strong>Managed Hydration</strong>
             <span>Treatment and alkaline water systems for institutions.</span>
           </a>
-          <a class="hero-pillar hero-pillar--energy" href="services.html#energy">
+          <a class="hero-pillar hero-pillar--energy" href="services.html#energy" data-reel-slide="1">
+            <span class="hero-pillar-bar" aria-hidden="true"></span>
             <span class="tag"><i></i>Energy</span>
             <strong>AI Energy Optimisation</strong>
             <span>Data-driven efficiency, monitoring and cost reduction.</span>
           </a>
-          <a class="hero-pillar hero-pillar--telecom" href="services.html#telecom">
+          <a class="hero-pillar hero-pillar--telecom" href="services.html#telecom" data-reel-slide="2">
+            <span class="hero-pillar-bar" aria-hidden="true"></span>
             <span class="tag"><i></i>Telecom</span>
             <strong>Telecom Infrastructure</strong>
             <span>Planning and design for resilient, scalable networks.</span>
